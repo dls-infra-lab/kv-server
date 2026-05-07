@@ -1,4 +1,4 @@
-module kvsrv1
+module kv-server
 
 go 1.22
 
