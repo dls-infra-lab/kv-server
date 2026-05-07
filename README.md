@@ -1,1 +1,1 @@
-# kv-store
+# kv-server
