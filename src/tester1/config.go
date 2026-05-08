@@ -15,7 +15,7 @@ import (
 	"testing"
 	"time"
 
-	"6.5840/labrpc"
+	"kv-server/labrpc"
 )
 
 const GRP0 = 0

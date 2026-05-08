@@ -9,8 +9,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"6.5840/labrpc"
-	"6.5840/tester1/sockrpc"
+	"kv-server/labrpc"
+	"kv-server/tester1/sockrpc"
 )
 
 //

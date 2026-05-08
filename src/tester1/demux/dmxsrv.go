@@ -5,7 +5,7 @@ import (
 	"log"
 	"sync"
 
-	"6.5840/labrpc"
+	"kv-server/labrpc"
 )
 
 type ServerI interface {

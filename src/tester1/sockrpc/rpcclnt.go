@@ -5,8 +5,8 @@ import (
 	"net"
 	"time"
 
-	"6.5840/labrpc"
-	"6.5840/tester1/demux"
+	"kv-server/labrpc"
+	"kv-server/tester1/demux"
 )
 
 type RPCArgs struct {

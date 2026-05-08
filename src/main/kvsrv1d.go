@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"6.5840/kvsrv1"
-	"6.5840/tester1"
+	"kv-server/kvsrv1"
+	"kv-server/tester1"
 )
 
 func main() {

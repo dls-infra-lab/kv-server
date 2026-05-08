@@ -10,9 +10,9 @@ import (
 	"strings"
 	"sync"
 
-	"6.5840/labrpc"
-	"6.5840/tester1/demux"
-	"6.5840/tester1/sockrpc"
+	"kv-server/labrpc"
+	"kv-server/tester1/demux"
+	"kv-server/tester1/sockrpc"
 )
 
 //

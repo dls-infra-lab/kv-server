@@ -4,8 +4,8 @@ import (
 	// "log"
 	"testing"
 
-	"6.5840/kvtest1"
-	"6.5840/tester1"
+	"kv-server/kvtest1"
+	"kv-server/tester1"
 )
 
 type TestKV struct {

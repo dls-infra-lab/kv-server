@@ -3,7 +3,7 @@ package tester
 import (
 	//"log"
 
-	"6.5840/tester1/sockrpc"
+	"kv-server/tester1/sockrpc"
 )
 
 type TesterRPC struct {

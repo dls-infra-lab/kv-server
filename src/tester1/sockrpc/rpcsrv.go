@@ -4,8 +4,8 @@ import (
 	"log"
 	"net"
 
-	"6.5840/labrpc"
-	"6.5840/tester1/demux"
+	"kv-server/labrpc"
+	"kv-server/tester1/demux"
 )
 
 func SockName(endName string) string {

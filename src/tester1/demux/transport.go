@@ -8,7 +8,7 @@ import (
 	//"log"
 	"net"
 
-	"6.5840/labrpc"
+	"kv-server/labrpc"
 )
 
 const (

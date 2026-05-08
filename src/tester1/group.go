@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"sync"
 
-	"6.5840/labrpc"
+	"kv-server/labrpc"
 )
 
 type Tgid int

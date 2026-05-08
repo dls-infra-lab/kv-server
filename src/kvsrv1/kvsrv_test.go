@@ -5,13 +5,14 @@ import (
 	"testing"
 	"time"
 
-	"6.5840/kvsrv1/rpc"
-	"6.5840/kvtest1"
+	kvtest "kv-server/kvtest1"
+
+	"kv-server/kvsrv1/rpc"
 )
 
 // Test Put with a single client and a reliable network
 func TestReliablePut(t *testing.T) {
-	const Val = "6.5840"
+	const Val = "kv-server"
 	const Ver = 0
 
 	ts := MakeTestKV(t, true)
