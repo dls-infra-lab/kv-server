@@ -12,6 +12,7 @@ type Lock struct {
 	// MakeLock().
 	ck kvtest.IKVClerk
 	lockname string
+	id string
 }
 
 // The tester calls MakeLock() and passes in a k/v clerk; your code can
@@ -21,19 +22,22 @@ type Lock struct {
 // lockname argument; locks with different names should be
 // independent.
 func MakeLock(ck kvtest.IKVClerk, lockname string) *Lock {
-	lk := &Lock{ck: ck, lockname: lockname}
-	
-	// adding lock to kv store for client to access it
-	// "0" = lock free, "1" = lock acquired
-	ck.Put(lockname, "0", 0)
+	id := kvtest.RandValue(8)
+	// each lock client must have a unique id
+	lk := &Lock{ck: ck, lockname: lockname, id: id}
 	return lk
 }
 
 func (lk *Lock) Acquire() {
 	for {
-		flag, version, getErr := lk.ck.Get(lk.lockname)
-		if flag == "0" && getErr == rpc.OK {
-			putErr := lk.ck.Put(lk.lockname, "1", version)
+		id, version, getErr := lk.ck.Get(lk.lockname)
+		if (getErr == rpc.ErrNoKey)  {
+			putErr := lk.ck.Put(lk.lockname, lk.id, 0)
+			if putErr == rpc.OK {
+				return
+			}
+		} else if (id == "" && getErr == rpc.OK) {
+			putErr := lk.ck.Put(lk.lockname, lk.id, version)
 			if putErr == rpc.OK {
 				return
 			}
@@ -42,7 +46,7 @@ func (lk *Lock) Acquire() {
 }
 
 func (lk *Lock) Release() {
-	if flag, version, getErr := lk.ck.Get(lk.lockname); flag == "1" && getErr == rpc.OK {
-		lk.ck.Put(lk.lockname, "0", version)
+	if id, version, getErr := lk.ck.Get(lk.lockname); id == lk.id && getErr == rpc.OK {
+		lk.ck.Put(lk.lockname, "", version)
 	}
 }
