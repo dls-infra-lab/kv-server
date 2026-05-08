@@ -4,6 +4,7 @@ import (
 	"kv-server/kvsrv1/rpc"
 	"kv-server/kvtest1"
 	"kv-server/tester1"
+	"time"
 )
 
 
@@ -34,6 +35,7 @@ func (ck *Clerk) Get(key string) (string, rpc.Tversion, rpc.Err) {
 	ok := ck.clnt.Call(ck.server, "KVServer.Get", &args, &reply)
 	for !ok {
 		ok = ck.clnt.Call(ck.server, "KVServer.Get", &args, &reply)
+		time.Sleep(100 * time.Millisecond)
 	}
 
 	return reply.Value, reply.Version, reply.Err
@@ -64,6 +66,7 @@ func (ck *Clerk) Put(key, value string, version rpc.Tversion) rpc.Err {
 	
 	for !ok {
 		ok = ck.clnt.Call(ck.server, "KVServer.Put", &args, &reply)
+		time.Sleep(100 * time.Millisecond)
 		retryCt++
 	}
 	
