@@ -38,9 +38,11 @@ func (lk *Lock) Acquire() {
 			}
 		} else if (id == "" && getErr == rpc.OK) {
 			putErr := lk.ck.Put(lk.lockname, lk.id, version)
-			if putErr == rpc.OK {
+			if (putErr == rpc.OK) {
 				return
 			}
+		} else if (id == lk.id) {
+			return
 		}
 	}
 }
