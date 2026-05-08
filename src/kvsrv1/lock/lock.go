@@ -1,7 +1,8 @@
 package lock
 
 import (
-	kvtest "kv-server/kvtest1"
+	"kv-server/kvsrv1/rpc"
+	"kv-server/kvtest1"
 )
 
 type Lock struct {
@@ -10,7 +11,7 @@ type Lock struct {
 	// Put and Get.  The tester passes the clerk in when calling
 	// MakeLock().
 	ck kvtest.IKVClerk
-	// You may add code here
+	lockname string
 }
 
 // The tester calls MakeLock() and passes in a k/v clerk; your code can
@@ -20,15 +21,28 @@ type Lock struct {
 // lockname argument; locks with different names should be
 // independent.
 func MakeLock(ck kvtest.IKVClerk, lockname string) *Lock {
-	lk := &Lock{ck: ck}
-	// You may add code here
+	lk := &Lock{ck: ck, lockname: lockname}
+	
+	// adding lock to kv store for client to access it
+	// "0" = lock free, "1" = lock acquired
+	ck.Put(lockname, "0", 0)
 	return lk
 }
 
 func (lk *Lock) Acquire() {
-	// Your code here
+	for {
+		flag, version, getErr := lk.ck.Get(lk.lockname)
+		if flag == "0" && getErr == rpc.OK {
+			putErr := lk.ck.Put(lk.lockname, "1", version)
+			if putErr == rpc.OK {
+				return
+			}
+		}
+	}
 }
 
 func (lk *Lock) Release() {
-	// Your code here
+	if flag, version, getErr := lk.ck.Get(lk.lockname); flag == "1" && getErr == rpc.OK {
+		lk.ck.Put(lk.lockname, "0", version)
+	}
 }
